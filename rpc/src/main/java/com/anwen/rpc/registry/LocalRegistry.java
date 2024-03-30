@@ -9,6 +9,7 @@ import java.util.concurrent.ConcurrentMap;
  * @version 1.0
  * @description: TODO
  * @date 29/3/2024 下午10:22
+ * 注册服务
  */
 public class LocalRegistry {
     //存储

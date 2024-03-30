@@ -7,6 +7,7 @@ import java.io.*;
  * @version 1.0
  * @description: TODO
  * @date 29/3/2024 下午10:41
+ * 序列化器
  */
 public class JdkSerializer implements  Serializer{
     @Override

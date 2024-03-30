@@ -5,8 +5,6 @@ import com.anwen.rpc.model.RpcResponse;
 import com.anwen.rpc.registry.LocalRegistry;
 import com.anwen.rpc.serializer.JdkSerializer;
 import com.anwen.rpc.serializer.Serializer;
-import com.sun.net.httpserver.Request;
-import io.netty.util.Recycler.Handle;
 import io.vertx.core.Handler;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpServerRequest;
@@ -21,6 +19,7 @@ import java.lang.reflect.Method;
  * @version 1.0
  * @description: TODO
  * @date 29/3/2024 下午10:58
+ * 请求处理器
  */
 public class HttpServerHander implements Handler<HttpServerRequest> {
 
@@ -35,7 +34,7 @@ public class HttpServerHander implements Handler<HttpServerRequest> {
             byte[] bytes = body.getBytes();
             RpcRequest rpcRequest=null;
             try {
-                rpcRequest=serializer.deserialize(bytes,RpcRequest.class)
+                rpcRequest=serializer.deserialize(bytes,RpcRequest.class);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -49,8 +48,10 @@ public class HttpServerHander implements Handler<HttpServerRequest> {
                 //反射调用
                 Class<?> implclass = LocalRegistry.get(rpcRequest.getServiceName());
                 Method method = implclass.getMethod(rpcRequest.getMethodName(), rpcRequest.getParameterTypes());
-                method.invoke(implclass.newInstance(), rpcRequest.getArgs());
-
+                Object invoke = method.invoke(implclass.newInstance(), rpcRequest.getArgs());
+                response.setData(invoke);
+                response.setDatatype(method.getReturnType());
+                response.setMessage("OK");
             } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException |
                      InstantiationException e) {
                 throw new RuntimeException(e);

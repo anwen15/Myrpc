@@ -2,6 +2,7 @@ package com.anwen.example.consumer;
 
 import com.anwen.example.common.model.User;
 import com.anwen.example.common.service.UserService;
+import com.anwen.rpc.proxy.ServiceProxyFactory;
 
 /**
  * @author nicefang
@@ -12,7 +13,7 @@ import com.anwen.example.common.service.UserService;
  */
 public class ConsumerExample {
     public static void main(String[] args) {
-        UserService userService = null;
+       UserService userService =ServiceProxyFactory.getProxy(UserService.class);
         User user=new User();
         user.setName("安稳");
         User newuser = userService.getUser(user);
