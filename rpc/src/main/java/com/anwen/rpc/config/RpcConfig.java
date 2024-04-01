@@ -1,5 +1,6 @@
 package com.anwen.rpc.config;
 
+import com.anwen.rpc.serializer.SerializerKeys;
 import lombok.Data;
 
 /**
@@ -30,6 +31,16 @@ public class RpcConfig {
      * 服务器端口号
      */
     private Integer port = 8080;
+
+    /**
+     * 模拟调用
+     */
+    private boolean mock=false;
+
+    /**
+     * 序列化器
+     */
+    private String serializer= SerializerKeys.JDK;
 
 
 }

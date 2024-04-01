@@ -1,0 +1,4 @@
+hessian=com.anwen.rpc.serializer.HessianSerializer
+kryo=com.anwen.rpc.serializer.KryoSerializer
+json=com.anwen.rpc.serializer.JsonSerializer
+jdk=com.anwen.rpc.serializer.JdkSerializer

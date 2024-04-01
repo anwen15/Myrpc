@@ -2,7 +2,9 @@ package com.anwen.example.consumer;
 
 import com.anwen.example.common.model.User;
 import com.anwen.example.common.service.UserService;
+import com.anwen.rpc.config.RpcConfig;
 import com.anwen.rpc.proxy.ServiceProxyFactory;
+import com.anwen.rpc.utils.ConfigUtils;
 
 /**
  * @author nicefang
@@ -13,7 +15,9 @@ import com.anwen.rpc.proxy.ServiceProxyFactory;
  */
 public class ConsumerExample {
     public static void main(String[] args) {
-       UserService userService =ServiceProxyFactory.getProxy(UserService.class);
+        RpcConfig rpc = ConfigUtils.loadconfig(RpcConfig.class, "rpc");
+        System.out.println(rpc);
+        UserService userService =ServiceProxyFactory.getProxy(UserService.class);
         User user=new User();
         user.setName("安稳");
         User newuser = userService.getUser(user);

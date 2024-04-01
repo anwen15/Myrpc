@@ -1,5 +1,7 @@
 package com.anwen.rpc.proxy;
 
+import com.anwen.RpcApplication;
+
 import java.lang.reflect.Proxy;
 
 /**
@@ -10,9 +12,19 @@ import java.lang.reflect.Proxy;
  */
 public class ServiceProxyFactory {
     public static <T> T getProxy(Class<T> serviceClass) {
+        if (RpcApplication.getRpcConfig().isMock()) {
+            return getmockproxy(serviceClass);
+        }
         return (T) Proxy.newProxyInstance(
                 serviceClass.getClassLoader(),
                 new Class[]{serviceClass},
                 new ServiceProxy());
+    }
+
+    public static <T> T getmockproxy(Class<T> mockclass) {
+        return (T) Proxy.newProxyInstance(
+                mockclass.getClassLoader(),
+                new Class[]{mockclass},
+                new MockServiceProxy());
     }
 }

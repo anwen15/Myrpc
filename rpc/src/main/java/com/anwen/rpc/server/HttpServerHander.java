@@ -1,10 +1,12 @@
 package com.anwen.rpc.server;
 
+import com.anwen.RpcApplication;
 import com.anwen.rpc.model.RpcRequest;
 import com.anwen.rpc.model.RpcResponse;
 import com.anwen.rpc.registry.LocalRegistry;
 import com.anwen.rpc.serializer.JdkSerializer;
 import com.anwen.rpc.serializer.Serializer;
+import com.anwen.rpc.serializer.SerializerFactory;
 import io.vertx.core.Handler;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpServerRequest;
@@ -26,7 +28,7 @@ public class HttpServerHander implements Handler<HttpServerRequest> {
     @Override
     public void handle(HttpServerRequest request) {
         //指定序列化器
-        final Serializer serializer = new JdkSerializer();
+        final Serializer serializer = SerializerFactory.getinstance(RpcApplication.getRpcConfig().getSerializer());
         System.out.println("接受request"+request.method()+""+request.uri());
 
         //异步处理http
