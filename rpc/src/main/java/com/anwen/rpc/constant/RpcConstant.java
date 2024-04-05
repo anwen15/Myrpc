@@ -9,7 +9,12 @@ package com.anwen.rpc.constant;
  */
 public interface RpcConstant {
     /**
-     *配置文件前缀
+     * 配置文件前缀
      */
     String CONFIG_PREFIX = "rpc";
+
+    /**
+     * 默认服务版本
+     */
+    String SERVICE_VERSION = "1.0";
 }

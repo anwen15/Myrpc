@@ -1,5 +1,8 @@
 package com.anwen.rpc.model;
 
+import cn.hutool.core.util.StrUtil;
+import lombok.Data;
+
 import java.io.PipedReader;
 
 /**
@@ -9,7 +12,7 @@ import java.io.PipedReader;
  * @date 1/4/2024 下午11:22
  * 服务元信息(注册)
  */
-
+@Data
 public class ServiceMetaInfo {
 
     /**
@@ -21,6 +24,16 @@ public class ServiceMetaInfo {
      * 服务版本号
      */
     private String serviceversion = "1.0";
+
+    /**
+     * 服务域名
+     */
+    private String serviceHost;
+
+    /**
+     * 服务端口
+     */
+    private String servicePort;
 
     /**
      *服务地址
@@ -46,6 +59,13 @@ public class ServiceMetaInfo {
      */
     public String getservicenodekey() {
         return String.format("%s/%s", getServicekey(), serviceaddress);
+    }
+
+    public String getServiceaddress() {
+        if (StrUtil.contains(serviceHost, "http")) {
+            return String.format("http://%s%s", serviceHost, servicePort);
+        }
+        return String.format("%s%s", serviceHost, servicePort);
     }
 }
 

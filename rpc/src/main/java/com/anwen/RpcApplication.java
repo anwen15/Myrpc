@@ -1,7 +1,10 @@
 package com.anwen;
 
+import com.anwen.rpc.config.RegistryConfig;
 import com.anwen.rpc.config.RpcConfig;
 import com.anwen.rpc.constant.RpcConstant;
+import com.anwen.rpc.registry.Registry;
+import com.anwen.rpc.registry.RegistryFactory;
 import com.anwen.rpc.utils.ConfigUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,6 +27,11 @@ public class RpcApplication {
     public static void init(RpcConfig newrpcConfig) {
         rpcConfig=newrpcConfig;
         log.info("init,rpcconfig={}",newrpcConfig.toString());
+        //注册中心初始化
+        RegistryConfig registryConfig = rpcConfig.getRegistryConfig();
+        Registry registry = RegistryFactory.getinstance(registryConfig.getRegistry());
+        registry.init(registryConfig);
+        log.info("注册中心初始化",registryConfig);
     }
 
     public static void init() {
