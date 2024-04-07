@@ -2,8 +2,11 @@ package com.anwen.rpc.registry;
 
 import com.anwen.rpc.config.RegistryConfig;
 import com.anwen.rpc.model.ServiceMetaInfo;
+import com.google.common.collect.Sets;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 注册中心
@@ -40,4 +43,11 @@ public interface Registry {
      * 服务销毁
      */
     void destroy();
+
+    /**
+     * 心跳检测
+     */
+    void heartbeat();
+
+
 }

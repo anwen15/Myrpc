@@ -32,6 +32,8 @@ public class RpcApplication {
         Registry registry = RegistryFactory.getinstance(registryConfig.getRegistry());
         registry.init(registryConfig);
         log.info("注册中心初始化",registryConfig);
+        //创建并注册shutdown hook
+        Runtime.getRuntime().addShutdownHook(new Thread(registry::destroy));
     }
 
     public static void init() {
