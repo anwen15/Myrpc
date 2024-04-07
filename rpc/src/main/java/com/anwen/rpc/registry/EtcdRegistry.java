@@ -9,6 +9,8 @@ import com.anwen.rpc.model.ServiceMetaInfo;
 import io.etcd.jetcd.*;
 import io.etcd.jetcd.options.GetOption;
 import io.etcd.jetcd.options.PutOption;
+import io.etcd.jetcd.watch.WatchEvent;
+import io.vertx.core.impl.ConcurrentHashSet;
 
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
@@ -34,6 +36,11 @@ public class EtcdRegistry implements Registry {
      * 注册中心服务缓存
      */
     private final RegistryServiceCache registryServiceCache = new RegistryServiceCache();
+
+    /**
+     * 正在监听的key集合
+     */
+    private final Set<String> watchkeysey = new ConcurrentHashSet<>();
     private Client client;
 
     private KV kvclient;
@@ -91,6 +98,7 @@ public class EtcdRegistry implements Registry {
                     .getKvs();
             List<ServiceMetaInfo> serviceMetaInfos = keyValues.stream().map(keyValue -> {
                 String value = keyValue.getValue().toString(StandardCharsets.UTF_8);
+                watch(value);
                 return JSONUtil.toBean(value, ServiceMetaInfo.class);
             }).collect(Collectors.toList());
             registryServiceCache.writecache(serviceMetaInfos);
@@ -149,5 +157,27 @@ public class EtcdRegistry implements Registry {
         });
         CronUtil.setMatchSecond(true);
         CronUtil.start();
+    }
+
+    @Override
+    public void watch(String nodekey) {
+        Watch watchClient = client.getWatchClient();
+        //没开启监听的话开启监听
+        boolean add = watchkeysey.add(nodekey);
+        if (add) {
+            watchClient.watch(ByteSequence.from(nodekey,StandardCharsets.UTF_8),
+                    response->{
+                for (WatchEvent event : response.getEvents()) {
+                    switch (event.getEventType()) {
+                        case DELETE :
+                            registryServiceCache.clearcache();
+                            break;
+                        case PUT:
+                        default:
+                            break;
+                    }
+                }
+            });
+        }
     }
 }
