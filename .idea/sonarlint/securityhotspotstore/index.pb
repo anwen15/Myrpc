@@ -142,3 +142,5 @@ j
 :rpc/src/main/java/com/anwen/rpc/registry/EtcdRegistry.java,b\3\b39f8ff87c3f1f258b24b09aff5bc1a1e22eaaec
 f
 6rpc/src/main/java/com/anwen/rpc/registry/Registry.java,2\0\204c2744e161bb47a63177f9deec19a3a21cdccb
+r
+Brpc/src/main/java/com/anwen/rpc/registry/RegistryServiceCache.java,1\a\1a2f5c3b88a9f58a0d61dc9b095f532a3f913e6d

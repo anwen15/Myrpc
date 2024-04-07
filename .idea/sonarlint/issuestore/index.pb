@@ -142,3 +142,5 @@ m
 =rpc/src/main/java/com/anwen/rpc/registry/RegistryFactory.java,4\4\446f9eba5e94e2ed069011847c8be25500e76e7f
 i
 9rpc/src/main/java/com/anwen/rpc/registry/RegistryKey.java,2\b\2b0c086361305d3bebe8555320ce1e74e07522be
+r
+Brpc/src/main/java/com/anwen/rpc/registry/RegistryServiceCache.java,1\a\1a2f5c3b88a9f58a0d61dc9b095f532a3f913e6d

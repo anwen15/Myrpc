@@ -29,6 +29,11 @@ public class EtcdRegistry implements Registry {
      * 本机注册节点key集合
      */
     private final Set<String> localRegistryKeySet = new HashSet<>();
+
+    /**
+     * 注册中心服务缓存
+     */
+    private final RegistryServiceCache registryServiceCache = new RegistryServiceCache();
     private Client client;
 
     private KV kvclient;
@@ -69,6 +74,12 @@ public class EtcdRegistry implements Registry {
 
     @Override
     public List<ServiceMetaInfo> servicediscovery(String servicekey) {
+        //从缓存中查找
+        List<ServiceMetaInfo> cacheServiceMetaInfoList = registryServiceCache.readcache();
+        if (cacheServiceMetaInfoList != null) {
+            return cacheServiceMetaInfoList;
+        }
+        //前缀搜索
         String searchPrefix = ETCD_ROOT_PATH + servicekey + "/";
         try {
             //前缀查询
@@ -78,10 +89,12 @@ public class EtcdRegistry implements Registry {
                             getOption)
                     .get()
                     .getKvs();
-            return keyValues.stream().map(keyValue -> {
+            List<ServiceMetaInfo> serviceMetaInfos = keyValues.stream().map(keyValue -> {
                 String value = keyValue.getValue().toString(StandardCharsets.UTF_8);
                 return JSONUtil.toBean(value, ServiceMetaInfo.class);
             }).collect(Collectors.toList());
+            registryServiceCache.writecache(serviceMetaInfos);
+            return serviceMetaInfos;
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException("获取服务列表失败");
         }
