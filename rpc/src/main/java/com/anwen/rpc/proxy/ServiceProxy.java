@@ -5,6 +5,7 @@ import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import com.anwen.RpcApplication;
 import com.anwen.rpc.config.RpcConfig;
+import com.anwen.rpc.constant.RpcConstant;
 import com.anwen.rpc.model.RpcRequest;
 import com.anwen.rpc.model.RpcResponse;
 import com.anwen.rpc.model.ServiceMetaInfo;
@@ -45,14 +46,13 @@ public class ServiceProxy implements InvocationHandler {
             Registry registry = RegistryFactory.getinstance(rpcConfig.getRegistryConfig().getRegistry());
             ServiceMetaInfo serviceMetaInfo = new ServiceMetaInfo();
             serviceMetaInfo.setServicename(servicename);
-            serviceMetaInfo.setServiceversion(rpcRequest.getServiceversion());
+            serviceMetaInfo.setServiceversion(RpcConstant.SERVICE_VERSION);
             List<ServiceMetaInfo> serviceMetaInfoList = registry.servicediscovery(serviceMetaInfo.getServicekey());
             if (CollUtil.isEmpty(serviceMetaInfoList)) {
                 throw new RuntimeException("暂无服务地址");
             }
             ServiceMetaInfo metaInfo = serviceMetaInfoList.get(0);
             // 发送请求
-            // todo 注意，这里地址被硬编码了（需要使用注册中心和服务发现机制解决）
             try (HttpResponse httpResponse = HttpRequest.post(metaInfo.getServiceaddress())
                     .body(bodyBytes)
                     .execute()) {

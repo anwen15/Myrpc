@@ -33,7 +33,7 @@ public class ServiceMetaInfo {
     /**
      * 服务端口
      */
-    private String servicePort;
+    private Integer servicePort;
 
     /**
      *服务地址
@@ -65,7 +65,7 @@ public class ServiceMetaInfo {
         if (StrUtil.contains(serviceHost, "http")) {
             return String.format("http://%s%s", serviceHost, servicePort);
         }
-        return String.format("%s%s", serviceHost, servicePort);
+        return String.format("%s:%s", serviceHost, servicePort);
     }
 }
 

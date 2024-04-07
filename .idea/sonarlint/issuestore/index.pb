@@ -134,3 +134,11 @@ Q.idea/sonarlint/securityhotspotstore/e/2/e2d7d32041987e16072f8eb42a0a48c023d019
 Q.idea/sonarlint/securityhotspotstore/e/9/e951a7ab04a7959e1f66b71ecfc4e0c380b8de7d,f\d\fd0933fc1c15215b01f1385b17aea592fb9226cb
 j
 :rpc/src/main/java/com/anwen/rpc/model/ServiceMetaInfo.java,a\3\a315fc3c227a8a2c3e2e5ede1f87120eb852bbec
+j
+:rpc/src/main/java/com/anwen/rpc/registry/EtcdRegistry.java,b\3\b39f8ff87c3f1f258b24b09aff5bc1a1e22eaaec
+f
+6rpc/src/main/java/com/anwen/rpc/registry/Registry.java,2\0\204c2744e161bb47a63177f9deec19a3a21cdccb
+m
+=rpc/src/main/java/com/anwen/rpc/registry/RegistryFactory.java,4\4\446f9eba5e94e2ed069011847c8be25500e76e7f
+i
+9rpc/src/main/java/com/anwen/rpc/registry/RegistryKey.java,2\b\2b0c086361305d3bebe8555320ce1e74e07522be

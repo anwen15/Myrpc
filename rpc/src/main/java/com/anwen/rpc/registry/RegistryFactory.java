@@ -25,6 +25,7 @@ public class RegistryFactory {
      * @return
      */
     public static Registry getinstance(String keys) {
-        SpiLoader.getInstance(Registry.class,keys);
+        return SpiLoader.getInstance(Registry.class,keys);
+
     }
 }
