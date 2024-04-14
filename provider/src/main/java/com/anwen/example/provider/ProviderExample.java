@@ -9,10 +9,6 @@ import com.anwen.rpc.registry.Registry;
 import com.anwen.rpc.registry.RegistryFactory;
 import com.anwen.rpc.server.HttpServer;
 import com.anwen.rpc.server.VertxHttpServer;
-import com.anwen.rpc.utils.ConfigUtils;
-
-import java.awt.image.PixelInterleavedSampleModel;
-import java.util.List;
 
 /**
  * @author nicefang
