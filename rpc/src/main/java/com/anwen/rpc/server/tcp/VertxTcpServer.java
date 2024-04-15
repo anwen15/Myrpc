@@ -2,7 +2,6 @@ package com.anwen.rpc.server.tcp;
 
 import com.anwen.rpc.server.HttpServer;
 import io.vertx.core.Vertx;
-import io.vertx.core.buffer.Buffer;
 import io.vertx.core.net.NetServer;
 
 /**
@@ -24,15 +23,8 @@ public class VertxTcpServer implements HttpServer {
         NetServer server = vertx.createNetServer();
 
         //处理请求
-        server.connectHandler(socket->{
-            //处理连接
-            socket.handler(buffer->{
-                byte[] bytes = buffer.getBytes();
-                //处理字节数组
-                byte[] handlerequest = handlerequest(bytes);
-                socket.write(Buffer.buffer(handlerequest));
-            });
-        });
+        server.connectHandler(new tcpserverhander());
+
         server.listen(port,result->{
             if (result.succeeded()) {
                 System.out.println("TCP服务器启动");

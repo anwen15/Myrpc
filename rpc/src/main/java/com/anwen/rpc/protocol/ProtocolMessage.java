@@ -23,7 +23,7 @@ public class ProtocolMessage<T> {
     /**
      * 消息体
      */
-    private T data;
+    private T body;
 
     /**
      * 协议消息头
@@ -58,12 +58,12 @@ public class ProtocolMessage<T> {
         /**
          * 请求id
          */
-        private byte requestid;
+        private long requestid;
 
         /**
          * 消息体长度
          */
-        private byte bodylength;
+        private int bodylength;
 
     }
 }

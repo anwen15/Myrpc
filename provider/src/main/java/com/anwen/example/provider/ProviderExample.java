@@ -7,8 +7,7 @@ import com.anwen.rpc.model.ServiceMetaInfo;
 import com.anwen.rpc.registry.LocalRegistry;
 import com.anwen.rpc.registry.Registry;
 import com.anwen.rpc.registry.RegistryFactory;
-import com.anwen.rpc.server.HttpServer;
-import com.anwen.rpc.server.VertxHttpServer;
+import com.anwen.rpc.server.tcp.VertxTcpServer;
 
 /**
  * @author nicefang
@@ -37,7 +36,7 @@ public class ProviderExample {
             throw new RuntimeException();
         }
         //启动服务
-        HttpServer httpServer = new VertxHttpServer();
+        VertxTcpServer httpServer = new VertxTcpServer();
         httpServer.start(rpcConfig.getPort());
 
 

@@ -1,5 +1,6 @@
 package com.anwen.rpc.protocol;
 
+import cn.hutool.core.util.ObjectUtil;
 import lombok.Getter;
 
 import java.util.Arrays;
@@ -14,7 +15,7 @@ public enum ProtocolMessageSerializerEnum {
     jdk(0, "jdk"),
     json(1, "json"),
     kryo(2,"kryo"),
-    hessian(3,"hession")
+    hessian(3,"hessian")
     ;
     private final int key;
 
@@ -33,6 +34,11 @@ public enum ProtocolMessageSerializerEnum {
         return Arrays.stream(values()).map(item->item.value).collect(Collectors.toList());
     }
 
+    /**
+     * 根据key获取枚举
+     * @param key
+     * @return
+     */
     public static ProtocolMessageSerializerEnum getenum(int key) {
         for (ProtocolMessageSerializerEnum value : ProtocolMessageSerializerEnum.values()) {
             if (value.key == key) {
@@ -40,5 +46,23 @@ public enum ProtocolMessageSerializerEnum {
             }
         }
         return null;
+    }
+
+    /**
+     * 根据value获取枚举
+     * @param value
+     * @return
+     */
+    public static ProtocolMessageSerializerEnum getenumbyvalue(String value) {
+        if (ObjectUtil.isEmpty(value)) {
+            return null;
+        }
+        for (ProtocolMessageSerializerEnum protocolMessageSerializerEnum : ProtocolMessageSerializerEnum.values()) {
+            if (protocolMessageSerializerEnum.value .equals(value)) {
+                return protocolMessageSerializerEnum;
+            }
+        }
+        return null;
+
     }
 }
