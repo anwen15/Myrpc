@@ -3,8 +3,6 @@ package com.anwen.rpc.model;
 import cn.hutool.core.util.StrUtil;
 import lombok.Data;
 
-import java.io.PipedReader;
-
 /**
  * @author nicefang
  * @version 1.0
@@ -28,12 +26,12 @@ public class ServiceMetaInfo {
     /**
      * 服务域名
      */
-    private String serviceHost;
+    private String serviceHost="localhost";
 
     /**
      * 服务端口
      */
-    private Integer servicePort;
+    private Integer servicePort=8081;
 
     /**
      *服务地址
