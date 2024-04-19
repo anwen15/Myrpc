@@ -1,0 +1,3 @@
+consistenthash=com.anwen.rpc.loadbalancer.ConsitententHashLoadBalancer
+random=com.anwen.rpc.loadbalancer.RandomLoadBalancer
+round=com.anwen.rpc.loadbalancer.RoundLoadbalancer

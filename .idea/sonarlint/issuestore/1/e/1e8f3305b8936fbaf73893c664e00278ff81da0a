@@ -1,14 +1,14 @@
 
-g	java:S1129"FDefine and throw a dedicated exception instead of using a generic one.(ÒÀ•ˆüÿÿÿÿ8úİøî1
-b	java:S112Q"FDefine and throw a dedicated exception instead of using a generic one.(ªø°8úİøî1
-g	java:S112Y"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8úİøî1
+g	java:S1121"FDefine and throw a dedicated exception instead of using a generic one.(ÒÀ•ˆüÿÿÿÿ8ç–¨·î1
 O
-java:S1135"2Complete the task associated to this TODO comment.(›ËÓ8Şøî1
+java:S1135"2Complete the task associated to this TODO comment.(›ËÓ8ğ–¨·î1
 [
-java:S1854&">Remove this useless assignment to local variable "serializer".(¿¦Î8‚Şøî1
+java:S1854">Remove this useless assignment to local variable "serializer".(¿¦Î8ò–¨·î1
+Y
+java:S18543"<Remove this useless assignment to local variable "metaInfo".(õŠÕá8ò–¨·î1
 L
-java:S1481&"/Remove this unused "serializer" local variable.(¿¦Î8ƒŞøî1
-]	java:S1250"<This block of commented-out lines of code should be removed.(†ŞÇøÿÿÿÿ8ƒŞøî1
-G	java:S106B"+Replace this use of System.out by a logger.(é™ü8†Şøî1
-L	java:S106]"+Replace this use of System.out by a logger.(›¶½ùÿÿÿÿ8ˆŞøî1
-]	java:S125g"<This block of commented-out lines of code should be removed.(÷ƒë·şÿÿÿÿ8ˆŞøî1
+java:S1481"/Remove this unused "serializer" local variable.(¿¦Î8ø–¨·î1
+]	java:S125("<This block of commented-out lines of code should be removed.(†ŞÇøÿÿÿÿ8ı–¨·î1
+J
+java:S14813"-Remove this unused "metaInfo" local variable.(õŠÕá8„—¨·î1
+]	java:S125;"<This block of commented-out lines of code should be removed.(÷ƒë·şÿÿÿÿ8…—¨·î1

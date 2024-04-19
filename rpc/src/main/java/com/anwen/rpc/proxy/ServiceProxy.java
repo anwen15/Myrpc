@@ -4,6 +4,8 @@ import cn.hutool.core.collection.CollUtil;
 import com.anwen.RpcApplication;
 import com.anwen.rpc.config.RpcConfig;
 import com.anwen.rpc.constant.RpcConstant;
+import com.anwen.rpc.loadbalancer.LoadBalancer;
+import com.anwen.rpc.loadbalancer.LoadBalancerFactory;
 import com.anwen.rpc.model.RpcRequest;
 import com.anwen.rpc.model.RpcResponse;
 import com.anwen.rpc.model.ServiceMetaInfo;
@@ -15,7 +17,9 @@ import com.anwen.rpc.server.tcp.VertxTcpClient;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author nicefang
@@ -48,9 +52,13 @@ public class ServiceProxy implements InvocationHandler {
         if (CollUtil.isEmpty(serviceMetaInfoList)) {
             throw new RuntimeException("暂无服务地址");
         }
-        ServiceMetaInfo metaInfo = serviceMetaInfoList.get(0);
+        //负载均衡
+        LoadBalancer loadBalancer = LoadBalancerFactory.getinstance(rpcConfig.getLoadBalancer());
+        Map<String, Object> requestparms = new HashMap<>();
+        requestparms.put("methodname", rpcRequest.getMethodName());
+        ServiceMetaInfo metaInfo = loadBalancer.select(requestparms, serviceMetaInfoList);
         // 发送请求
-        RpcResponse rpcResponse = VertxTcpClient.dorequest(rpcRequest, serviceMetaInfo);
+        RpcResponse rpcResponse = VertxTcpClient.dorequest(rpcRequest, metaInfo);
         return rpcResponse.getData();
 
     }

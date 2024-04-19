@@ -1,5 +1,6 @@
 package com.anwen.rpc.config;
 
+import com.anwen.rpc.loadbalancer.LoadBalancerKeys;
 import com.anwen.rpc.serializer.SerializerKeys;
 import lombok.Data;
 
@@ -46,6 +47,11 @@ public class RpcConfig {
      * 注册中心
      */
     private RegistryConfig registryConfig = new RegistryConfig();
+
+    /**
+     * 负载均衡器
+     */
+    private String loadBalancer = LoadBalancerKeys.round;
 
 
 }
