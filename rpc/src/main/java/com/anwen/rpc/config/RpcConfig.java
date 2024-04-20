@@ -1,6 +1,7 @@
 package com.anwen.rpc.config;
 
 import com.anwen.rpc.loadbalancer.LoadBalancerKeys;
+import com.anwen.rpc.retry.RetryKeys;
 import com.anwen.rpc.serializer.SerializerKeys;
 import lombok.Data;
 
@@ -52,6 +53,11 @@ public class RpcConfig {
      * 负载均衡器
      */
     private String loadBalancer = LoadBalancerKeys.round;
+
+    /**
+     * 重试策略
+     */
+    private String retrystrategy = RetryKeys.no;
 
 
 }

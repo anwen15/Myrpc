@@ -1,0 +1,2 @@
+no=com.anwen.rpc.retry.NoretryStrstegy
+fixedtime=com.anwen.rpc.retry.FixedTimeRetryStrategy

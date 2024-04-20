@@ -11,6 +11,8 @@ import com.anwen.rpc.model.RpcResponse;
 import com.anwen.rpc.model.ServiceMetaInfo;
 import com.anwen.rpc.registry.Registry;
 import com.anwen.rpc.registry.RegistryFactory;
+import com.anwen.rpc.retry.RetryStrategy;
+import com.anwen.rpc.retry.RetryStrategyFactory;
 import com.anwen.rpc.serializer.Serializer;
 import com.anwen.rpc.serializer.SerializerFactory;
 import com.anwen.rpc.server.tcp.VertxTcpClient;
@@ -29,7 +31,7 @@ import java.util.Map;
  */
 public class ServiceProxy implements InvocationHandler {
     @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+    public Object invoke(Object proxy, Method method, Object[] args)  {
         // 指定序列化器
         Serializer serializer = SerializerFactory.getinstance(RpcApplication.getRpcConfig().getSerializer());
         String servicename = method.getDeclaringClass().getName();
@@ -58,8 +60,16 @@ public class ServiceProxy implements InvocationHandler {
         requestparms.put("methodname", rpcRequest.getMethodName());
         ServiceMetaInfo metaInfo = loadBalancer.select(requestparms, serviceMetaInfoList);
         // 发送请求
-        RpcResponse rpcResponse = VertxTcpClient.dorequest(rpcRequest, metaInfo);
-        return rpcResponse.getData();
+        //重试策略
+        try {
+            RetryStrategy retryStrategy = RetryStrategyFactory.getinstance(rpcConfig.getRetrystrategy());
+            RpcResponse rpcResponse = retryStrategy.doretry(() -> VertxTcpClient.dorequest(rpcRequest, metaInfo));
+            return rpcResponse.getData();
+        } catch (Exception e) {
+            throw new RuntimeException("调用失败");
+        }
+
+
 
     }
 //try (HttpResponse httpResponse = HttpRequest.post(metaInfo.getServiceaddress())
