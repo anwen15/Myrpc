@@ -1,13 +1,11 @@
 package com.anwen.example.provider;
 
-import com.anwen.RpcApplication;
 import com.anwen.example.common.service.UserService;
-import com.anwen.rpc.config.RpcConfig;
-import com.anwen.rpc.model.ServiceMetaInfo;
-import com.anwen.rpc.registry.LocalRegistry;
-import com.anwen.rpc.registry.Registry;
-import com.anwen.rpc.registry.RegistryFactory;
-import com.anwen.rpc.server.tcp.VertxTcpServer;
+import com.anwen.rpc.bootstart.prividerbootstart;
+import com.anwen.rpc.model.ServiceRegisterInfo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author nicefang
@@ -18,26 +16,10 @@ import com.anwen.rpc.server.tcp.VertxTcpServer;
  */
 public class ProviderExample {
     public static void main(String[] args) {
-        RpcApplication.init();
-        //注册服务
-        String servicename = UserService.class.getName();
-        LocalRegistry.register(servicename, UserServiceImpl.class);
-        //注册到注册中心
-        RpcConfig rpcConfig = RpcApplication.getRpcConfig();
-        Registry registry = RegistryFactory.getinstance(rpcConfig.getRegistryConfig().getRegistry());
-        ServiceMetaInfo serviceMetaInfo = new ServiceMetaInfo();
-        serviceMetaInfo.setServicename(servicename);
-        serviceMetaInfo.setServicePort(rpcConfig.getPort());
-        serviceMetaInfo.setServiceHost(rpcConfig.getHost());
-        serviceMetaInfo.setServiceaddress(rpcConfig.getHost()+":"+rpcConfig.getPort());
-        try {
-            registry.registry(serviceMetaInfo);
-        } catch (Exception e) {
-            throw new RuntimeException();
-        }
-        //启动服务
-        VertxTcpServer httpServer = new VertxTcpServer();
-        httpServer.start(rpcConfig.getPort());
+        List<ServiceRegisterInfo<?>> serviceRegisterInfos = new ArrayList<>();
+        ServiceRegisterInfo serviceRegisterInfo = new ServiceRegisterInfo<>(UserService.class.getName(), UserServiceImpl.class);
+        serviceRegisterInfos.add(serviceRegisterInfo);
+        prividerbootstart.init(serviceRegisterInfos);
 
 
     }

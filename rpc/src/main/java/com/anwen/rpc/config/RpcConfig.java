@@ -1,7 +1,8 @@
 package com.anwen.rpc.config;
 
+import com.anwen.rpc.falut.retry.RetryKeys;
+import com.anwen.rpc.falut.tolerant.TolerateStrategyKeys;
 import com.anwen.rpc.loadbalancer.LoadBalancerKeys;
-import com.anwen.rpc.retry.RetryKeys;
 import com.anwen.rpc.serializer.SerializerKeys;
 import lombok.Data;
 
@@ -60,4 +61,8 @@ public class RpcConfig {
     private String retrystrategy = RetryKeys.no;
 
 
+    /**
+     * 容错
+     */
+    private String tolerantStrategy = TolerateStrategyKeys.failfast;
 }

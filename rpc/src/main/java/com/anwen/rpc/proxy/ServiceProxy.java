@@ -4,6 +4,10 @@ import cn.hutool.core.collection.CollUtil;
 import com.anwen.RpcApplication;
 import com.anwen.rpc.config.RpcConfig;
 import com.anwen.rpc.constant.RpcConstant;
+import com.anwen.rpc.falut.retry.RetryStrategy;
+import com.anwen.rpc.falut.retry.RetryStrategyFactory;
+import com.anwen.rpc.falut.tolerant.TolerateStrategyFactory;
+import com.anwen.rpc.falut.tolerant.tolerantStrategy;
 import com.anwen.rpc.loadbalancer.LoadBalancer;
 import com.anwen.rpc.loadbalancer.LoadBalancerFactory;
 import com.anwen.rpc.model.RpcRequest;
@@ -11,8 +15,6 @@ import com.anwen.rpc.model.RpcResponse;
 import com.anwen.rpc.model.ServiceMetaInfo;
 import com.anwen.rpc.registry.Registry;
 import com.anwen.rpc.registry.RegistryFactory;
-import com.anwen.rpc.retry.RetryStrategy;
-import com.anwen.rpc.retry.RetryStrategyFactory;
 import com.anwen.rpc.serializer.Serializer;
 import com.anwen.rpc.serializer.SerializerFactory;
 import com.anwen.rpc.server.tcp.VertxTcpClient;
@@ -66,7 +68,10 @@ public class ServiceProxy implements InvocationHandler {
             RpcResponse rpcResponse = retryStrategy.doretry(() -> VertxTcpClient.dorequest(rpcRequest, metaInfo));
             return rpcResponse.getData();
         } catch (Exception e) {
-            throw new RuntimeException("调用失败");
+            //容错
+            tolerantStrategy tolerantStrategy = TolerateStrategyFactory.getinstance(rpcConfig.getTolerantStrategy());
+            RpcResponse response = tolerantStrategy.dotolerant(null, e);
+            return response.getData();
         }
 
 

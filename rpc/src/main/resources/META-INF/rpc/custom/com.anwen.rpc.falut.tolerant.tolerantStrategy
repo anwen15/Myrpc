@@ -1,0 +1,2 @@
+failfast=com.anwen.rpc.falut.tolerant.FailFastTolerantStrategy
+failssafe=com.anwen.rpc.falut.tolerant.FailSafeTolerateStrategy

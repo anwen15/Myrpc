@@ -102,8 +102,8 @@ public class SpiLoader {
      * @param loadclass
      * @return
      */
-    public static Map<String, Class<?>> load(Class<?> loadclass) {
-        log.info("加载类型为{]的spi", loadclass.getName());
+    public static  Map<String, Class<?>> load(Class<?> loadclass) {
+        log.info("加载类型为{}的spi", loadclass.getName());
         //扫描路径,用户的优先级大于系统
         HashMap<String,Class<?>> keymap = new HashMap<>();
         for (String scanDir : SCAN_DIRS) {
